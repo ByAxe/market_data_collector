@@ -1,13 +1,16 @@
 buildscript {
-	ext {
-		springBootVersion = '1.5.9.RELEASE'
-	}
-	repositories {
-		mavenCentral()
-	}
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-	}
+    ext {
+        springBootVersion = '1.5.9.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+        jcenter()
+        maven { url "https://repo.spring.io/snapshot" }
+        maven { url "https://repo.spring.io/milestone" }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
 }
 
 apply plugin: 'java'
@@ -16,17 +19,44 @@ apply plugin: 'org.springframework.boot'
 
 group = 'com.crypto.deep'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = 1.8
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
 
 repositories {
-	mavenCentral()
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+    maven { url "https://repo.spring.io/snapshot" }
+    maven { url "https://repo.spring.io/milestone" }
 }
 
 
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-data-jpa')
-	compile('org.springframework.boot:spring-boot-starter-web')
-	runtime('org.postgresql:postgresql')
-	compileOnly('org.projectlombok:lombok')
-	testCompile('org.springframework.boot:spring-boot-starter-test')
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    //  -------------------------------------------------------------------------------------------------
+    compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
+    compile('com.fasterxml.jackson.core:jackson-core')
+    compile('com.fasterxml.jackson.core:jackson-databind')
+    compile('com.fasterxml.jackson.core:jackson-annotations')
+    //  -------------------------------------------------------------------------------------------------
+    compile('org.quartz-scheduler:quartz:2.2.1')
+    //  -------------------------------------------------------------------------------------------------
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2', version: '1.5.7.RELEASE'
+    //  -------------------------------------------------------------------------------------------------
+    runtime('org.postgresql:postgresql')
+    //  -------------------------------------------------------------------------------------------------
+    compileOnly('org.projectlombok:lombok')
+    //  -------------------------------------------------------------------------------------------------
+    testCompile('org.junit.platform:junit-platform-runner:1.0.0-M4')
+    testCompile('org.testng:testng:6.10')
+    testCompile('com.github.sbrannen:spring-test-junit5:1.0.0.M4')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+configurations {
+    all*.exclude module: 'logback-classic'
 }

@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 @Service
 public class HistoryService implements IHistoryService {
@@ -68,7 +69,10 @@ public class HistoryService implements IHistoryService {
 
         String url = environment.getProperty("history.data.url") + name + "/" + beginInMills + "/" + endInMills;
 
-        Thread.sleep(1000);
+        Random r = new Random();
+        int low = 700;
+        int high = 2100;
+        Thread.sleep(r.nextInt(high - low) + low);
 
         HttpResponse<String> stringHttpResponse = Unirest.get(url)
                 .asString();
@@ -96,15 +100,14 @@ public class HistoryService implements IHistoryService {
     }
 
     @Override
-    public List<History> synchronizeHistory() {
+    public void synchronizeHistory() {
         List<Currency> currencies = currencyService.findAll();
 
         currencies.stream()
                 .map(Currency::getName)
-                .map(n -> n.replaceAll(" ", ""))
                 .forEach(name -> {
                     LocalDateTime beginDate = LocalDateTime.of(2017, 1, 1, 14, 0, 0);
-                    LocalDateTime endDate = LocalDateTime.of(2017, 1, 1, 15, 0, 0);
+                    LocalDateTime endDate = LocalDateTime.of(2017, 1, 2, 13, 59, 59);
 
                     try {
                         while (endDate.isBefore(LocalDateTime.now())) {
@@ -117,7 +120,6 @@ public class HistoryService implements IHistoryService {
                         e.printStackTrace();
                     }
                 });
-        return null;
     }
 
     @Override

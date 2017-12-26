@@ -16,7 +16,7 @@ public interface IHistoryService {
 
     List<History> synchronizeHistory(String name, LocalDateTime begin, LocalDateTime end) throws Exception;
 
-    List<History> synchronizeHistory();
+    void synchronizeHistory();
 
     void deleteAllBetween(LocalDateTime begin, LocalDateTime end);
 

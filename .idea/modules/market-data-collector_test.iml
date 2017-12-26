@@ -29,6 +29,7 @@
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.8.0" level="project" />
     <orderEntry type="library" name="Gradle: org.quartz-scheduler:quartz:2.2.1" level="project" />
     <orderEntry type="library" name="Gradle: com.mashape.unirest:unirest-java:1.4.9" level="project" />
+    <orderEntry type="library" name="Gradle: org.projectlombok:lombok:1.16.18" level="project" />
     <orderEntry type="library" name="Gradle: org.junit.platform:junit-platform-runner:1.0.0-M4" level="project" />
     <orderEntry type="library" name="Gradle: org.testng:testng:6.10" level="project" />
     <orderEntry type="library" name="Gradle: com.github.sbrannen:spring-test-junit5:1.0.0.M4" level="project" />

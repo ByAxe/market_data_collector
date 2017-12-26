@@ -1,17 +1,11 @@
 package com.crypto.deep.marketdatacollector.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 @Entity
 @Table(name = "currencies", indexes = {
         @Index(name = "currencies_pkey", unique = true, columnList = "id"),
@@ -35,17 +29,12 @@ public class Currency {
     @Column(columnDefinition = "TEXT")
     private String description;
 
+    public Currency() {
+    }
+
     public Currency(String name, String symbol, BigDecimal maxSupply) {
         this.name = name;
         this.symbol = symbol;
         this.maxSupply = maxSupply;
-    }
-
-    public String getName() {
-        return name.replaceAll(" ", "");
-    }
-
-    public String getSymbol() {
-        return symbol.replaceAll(" ", "");
     }
 }

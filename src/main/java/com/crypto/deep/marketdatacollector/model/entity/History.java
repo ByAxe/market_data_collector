@@ -36,4 +36,11 @@ public class History {
 
     @Column(name = "price_usd")
     private BigDecimal priceUSD;
+
+    public History(String name, Long dt, BigDecimal priceBTC, BigDecimal priceUSD) {
+        this.name = name;
+        this.dt = dt;
+        this.priceBTC = priceBTC;
+        this.priceUSD = priceUSD;
+    }
 }

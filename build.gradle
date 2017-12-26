@@ -44,8 +44,7 @@ dependencies {
     compile('com.fasterxml.jackson.core:jackson-annotations')
     //  -------------------------------------------------------------------------------------------------
     compile('org.quartz-scheduler:quartz:2.2.1')
-    //  -------------------------------------------------------------------------------------------------
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2', version: '1.5.7.RELEASE'
+    compile('com.mashape.unirest:unirest-java:1.4.9')
     //  -------------------------------------------------------------------------------------------------
     runtime('org.postgresql:postgresql')
     //  -------------------------------------------------------------------------------------------------
@@ -55,8 +54,4 @@ dependencies {
     testCompile('org.testng:testng:6.10')
     testCompile('com.github.sbrannen:spring-test-junit5:1.0.0.M4')
     testCompile('org.springframework.boot:spring-boot-starter-test')
-}
-
-configurations {
-    all*.exclude module: 'logback-classic'
 }

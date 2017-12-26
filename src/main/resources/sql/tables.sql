@@ -1,8 +1,8 @@
 DROP TABLE IF EXISTS market_data.currencies CASCADE;
 CREATE TABLE market_data.currencies (
   id          BIGSERIAL PRIMARY KEY,
-  name        CHAR(25) UNIQUE NOT NULL,
-  symbol      CHAR(7) UNIQUE  NOT NULL,
+  name        CHAR(40) UNIQUE NOT NULL,
+  symbol      CHAR(20)        NOT NULL,
   max_supply  NUMERIC,
   description TEXT
 );

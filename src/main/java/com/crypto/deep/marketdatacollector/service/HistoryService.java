@@ -16,10 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 @Service
 public class HistoryService implements IHistoryService {
@@ -39,6 +36,7 @@ public class HistoryService implements IHistoryService {
 
     @Override
     public void save(List<History> list) {
+        System.out.println(new Date().toString() + ": " + list.size());
         historyRepository.save(list);
     }
 
@@ -61,6 +59,16 @@ public class HistoryService implements IHistoryService {
     }
 
     @Override
+    public List<History> findAll() {
+        return (List<History>) historyRepository.findAll();
+    }
+
+    @Override
+    public List<String> findAllNameDistinct() {
+        return historyRepository.findAllNameDistinct();
+    }
+
+    @Override
     public List<History> synchronizeHistory(String name, LocalDateTime begin, LocalDateTime end) throws Exception {
         List<History> result = new ArrayList<>();
 
@@ -70,8 +78,8 @@ public class HistoryService implements IHistoryService {
         String url = environment.getProperty("history.data.url") + name + "/" + beginInMills + "/" + endInMills;
 
         Random r = new Random();
-        int low = 700;
-        int high = 2100;
+        int low = 1200;
+        int high = 2700;
         Thread.sleep(r.nextInt(high - low) + low);
 
         HttpResponse<String> stringHttpResponse = Unirest.get(url)
@@ -103,24 +111,31 @@ public class HistoryService implements IHistoryService {
     public void synchronizeHistory() {
         List<Currency> currencies = currencyService.findAll();
 
+        List<String> alreadyPresent = findAllNameDistinct();
+
         currencies.stream()
                 .map(Currency::getName)
                 .forEach(name -> {
-                    LocalDateTime beginDate = LocalDateTime.of(2017, 1, 1, 14, 0, 0);
-                    LocalDateTime endDate = LocalDateTime.of(2017, 1, 2, 13, 59, 59);
+                    if (!alreadyPresent.contains(name)) {
+                        System.out.println(new Date().toString() + ": " + name);
 
-                    try {
-                        while (endDate.isBefore(LocalDateTime.now())) {
-                            save(synchronizeHistory(name, beginDate, endDate));
+                        LocalDateTime beginDate = LocalDateTime.of(2017, 1, 1, 14, 0, 0);
+                        LocalDateTime endDate = LocalDateTime.of(2017, 1, 2, 13, 59, 59);
 
-                            beginDate = beginDate.plusDays(1);
-                            endDate = endDate.plusDays(1);
+                        try {
+                            while (endDate.isBefore(LocalDateTime.of(2017, 12, 28, 0, 0, 0))) {
+                                save(synchronizeHistory(name, beginDate, endDate));
+
+                                beginDate = beginDate.plusDays(1);
+                                endDate = endDate.plusDays(1);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-                    } catch (Exception e) {
-                        e.printStackTrace();
                     }
                 });
     }
+
 
     @Override
     public void deleteAllBetween(LocalDateTime begin, LocalDateTime end) {

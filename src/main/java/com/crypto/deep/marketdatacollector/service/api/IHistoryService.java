@@ -14,6 +14,10 @@ public interface IHistoryService {
 
     List<History> findByName(String name, LocalDateTime begin, LocalDateTime end);
 
+    List<History> findAll();
+
+    List<String> findAllNameDistinct();
+
     List<History> synchronizeHistory(String name, LocalDateTime begin, LocalDateTime end) throws Exception;
 
     void synchronizeHistory();

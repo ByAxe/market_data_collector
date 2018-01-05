@@ -3,7 +3,7 @@ package com.crypto.deep.marketdatacollector.service;
 import com.crypto.deep.marketdatacollector.core.Utils;
 import com.crypto.deep.marketdatacollector.model.entity.Currency;
 import com.crypto.deep.marketdatacollector.model.entity.History;
-import com.crypto.deep.marketdatacollector.repository.IHistoryRepository;
+import com.crypto.deep.marketdatacollector.repository.api.IHistoryRepository;
 import com.crypto.deep.marketdatacollector.service.api.ICurrencyService;
 import com.crypto.deep.marketdatacollector.service.api.IHistoryService;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -115,24 +115,24 @@ public class HistoryService implements IHistoryService {
 
         currencies.stream()
                 .map(Currency::getName)
+                .filter(o -> !alreadyPresent.contains(o))
                 .forEach(name -> {
-                    if (!alreadyPresent.contains(name)) {
-                        System.out.println(new Date().toString() + ": " + name);
+                    System.out.println(new Date().toString() + ": " + name);
 
-                        LocalDateTime beginDate = LocalDateTime.of(2017, 1, 1, 14, 0, 0);
-                        LocalDateTime endDate = LocalDateTime.of(2017, 1, 2, 13, 59, 59);
+                    LocalDateTime beginDate = LocalDateTime.of(2017, 1, 1, 14, 0, 0);
+                    LocalDateTime endDate = LocalDateTime.of(2017, 1, 2, 13, 59, 59);
 
-                        try {
-                            while (endDate.isBefore(LocalDateTime.of(2017, 12, 28, 0, 0, 0))) {
-                                save(synchronizeHistory(name, beginDate, endDate));
+                    try {
+                        while (endDate.isBefore(LocalDateTime.of(2017, 12, 28, 0, 0, 0))) {
+                            save(synchronizeHistory(name, beginDate, endDate));
 
-                                beginDate = beginDate.plusDays(1);
-                                endDate = endDate.plusDays(1);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                            beginDate = beginDate.plusDays(1);
+                            endDate = endDate.plusDays(1);
                         }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
+
                 });
     }
 

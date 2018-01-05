@@ -2,7 +2,7 @@ package com.crypto.deep.marketdatacollector.service;
 
 import com.crypto.deep.marketdatacollector.core.Utils;
 import com.crypto.deep.marketdatacollector.model.entity.Currency;
-import com.crypto.deep.marketdatacollector.repository.ICurrencyRepository;
+import com.crypto.deep.marketdatacollector.repository.api.ICurrencyRepository;
 import com.crypto.deep.marketdatacollector.service.api.ICurrencyService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;

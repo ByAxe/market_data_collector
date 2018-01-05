@@ -1,5 +1,6 @@
 package com.crypto.deep.marketdatacollector;
 
+import com.crypto.deep.marketdatacollector.model.Trade;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -60,5 +61,10 @@ public class MarketDataCollectorApplication {
     @Bean(name = "transactionManager")
     public PlatformTransactionManager transactionManager(@Qualifier("entityManagerFactory") EntityManagerFactory entityManagerFactory) {
         return new JpaTransactionManager(entityManagerFactory);
+    }
+
+    @Bean(name = "tClass")
+    public Class<Trade> tradeClass() {
+        return Trade.class;
     }
 }

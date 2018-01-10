@@ -15,8 +15,10 @@ public interface IHistoryRepository extends CrudRepository<History, Long> {
     @Query(value = "SELECT DISTINCT name FROM market_data.history ", nativeQuery = true)
     List<String> findAllNameDistinct();
 
+    List<History> findAllByDtBetween(long begin, long end);
+
     void deleteAllByName(String name);
 
-    void deleteAllByNameBetween(long begin, long end);
+    void deleteAllByDtBetween(long begin, long end);
 
 }

@@ -26,6 +26,8 @@ import static java.time.temporal.ChronoUnit.MONTHS;
 
 public class Utils {
 
+    public static final LocalDateTime THRESHOLD = LocalDateTime.of(2017, 12, 28, 0, 0, 0);
+
     /**
      * Преобразование {@link LocalDateTime} в JSON формат
      */

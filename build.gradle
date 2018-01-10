@@ -20,7 +20,7 @@ apply plugin: 'org.springframework.boot'
 group = 'com.crypto.deep'
 version = '0.0.1-SNAPSHOT'
 
-sourceCompatibility = JavaVersion.VERSION_1_9
+sourceCompatibility = JavaVersion.VERSION_1_8
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'

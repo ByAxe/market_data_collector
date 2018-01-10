@@ -18,6 +18,8 @@ public interface IHistoryService {
 
     List<String> findAllNameDistinct();
 
+    List<History> findAllBetweenDt(LocalDateTime begin, LocalDateTime end);
+
     List<History> synchronizeHistory(String name, LocalDateTime begin, LocalDateTime end) throws Exception;
 
     void synchronizeHistory();

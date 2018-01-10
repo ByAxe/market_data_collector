@@ -18,6 +18,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
 
+import static com.crypto.deep.marketdatacollector.core.Utils.THRESHOLD;
+
 @Service
 public class HistoryService implements IHistoryService {
 
@@ -66,6 +68,14 @@ public class HistoryService implements IHistoryService {
     @Override
     public List<String> findAllNameDistinct() {
         return historyRepository.findAllNameDistinct();
+    }
+
+    @Override
+    public List<History> findAllBetweenDt(LocalDateTime begin, LocalDateTime end) {
+        long beginInMills = Utils.convertLocalDateTimeToMills(begin);
+        long endInMills = Utils.convertLocalDateTimeToMills(end);
+
+        return historyRepository.findAllByDtBetween(beginInMills, endInMills);
     }
 
     @Override
@@ -123,7 +133,7 @@ public class HistoryService implements IHistoryService {
                     LocalDateTime endDate = LocalDateTime.of(2017, 1, 2, 13, 59, 59);
 
                     try {
-                        while (endDate.isBefore(LocalDateTime.of(2017, 12, 28, 0, 0, 0))) {
+                        while (endDate.isBefore(THRESHOLD)) {
                             save(synchronizeHistory(name, beginDate, endDate));
 
                             beginDate = beginDate.plusDays(1);
@@ -142,7 +152,7 @@ public class HistoryService implements IHistoryService {
         long beginInMills = Utils.convertLocalDateTimeToMills(begin);
         long endInMills = Utils.convertLocalDateTimeToMills(end);
 
-        historyRepository.deleteAllByNameBetween(beginInMills, endInMills);
+        historyRepository.deleteAllByDtBetween(beginInMills, endInMills);
     }
 
     @Override

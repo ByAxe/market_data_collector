@@ -71,7 +71,7 @@ public class HistoryService implements IHistoryService {
     }
 
     @Override
-    public Set<History> findAllBetweenDt(LocalDateTime begin, LocalDateTime end) {
+    public List<History> findAllBetweenDt(LocalDateTime begin, LocalDateTime end) {
         long beginInMills = Utils.convertLocalDateTimeToMills(begin);
         long endInMills = Utils.convertLocalDateTimeToMills(end);
 

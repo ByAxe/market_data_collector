@@ -16,7 +16,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.crypto.deep.marketdatacollector.core.Utils.*;
@@ -64,8 +63,7 @@ public class CSVService implements ICSVService {
             // Переменные вынесены за цикл для улучшения производительности
             List<String> resultValuesOrdered;
             Map<String, String> nameAndPrice;
-            Set<History> historySet;
-
+            List<History> historyList;
 
             // Внешнее окно выборки из БД
             LocalDateTime outerBegin = LocalDateTime.from(innerBegin);
@@ -74,7 +72,8 @@ public class CSVService implements ICSVService {
             // Внешний цикл выбирает из БД данные за большой промежуток времени
             while (outerBegin.isBefore(THRESHOLD)) {
                 System.out.println("Outer window for: " + outerBegin + " - " + outerEnd);
-                historySet = historyService.findAllBetweenDt(outerBegin, outerEnd);
+                historyList = historyService.findAllBetweenDt(outerBegin, outerEnd);
+                System.out.println("Outer window size: " + historyList.size());
 
                 // Внутренний цикл выбирает данные уже из Памяти и режет их на необходимого размера кусочки
                 while (innerBegin.isBefore(outerEnd)) {
@@ -83,13 +82,14 @@ public class CSVService implements ICSVService {
                     Long innerBeginAsLong = convertLocalDateTimeToMills(innerBegin);
                     Long innerEndAsLong = convertLocalDateTimeToMills(innerEnd);
 
-                    // Собираем в удобную структуру, где есть только ИМЯ - ЦЕНА
-                    // Выбрасываем значения с повторяющимися именами для того чтобы не было ошибки идентичности
-                    // при добавлении в Map
-                    nameAndPrice = historySet
+                    /*
+                        Собираем в удобную структуру, где есть только ИМЯ - ЦЕНА
+                        Выбрасываем значения с повторяющимися именами для того,
+                        чтобы не было ошибки идентичности при добавлении в Map
+                    */
+                    nameAndPrice = historyList
                             .stream()
                             .filter(h -> h.getDt() >= innerBeginAsLong && h.getDt() < innerEndAsLong)
-//                            .sorted(Comparator.comparing(History::getName))
                             .filter(distinctByKey(History::getName))
                             .collect(Collectors.toMap(History::getName,
                                     history -> {

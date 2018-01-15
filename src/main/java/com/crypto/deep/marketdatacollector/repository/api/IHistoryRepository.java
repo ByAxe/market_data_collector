@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
-import java.util.Set;
 
 public interface IHistoryRepository extends CrudRepository<History, Long> {
 
@@ -16,7 +15,7 @@ public interface IHistoryRepository extends CrudRepository<History, Long> {
     @Query(value = "SELECT DISTINCT name FROM market_data.history ", nativeQuery = true)
     List<String> findAllNameDistinct();
 
-    Set<History> findAllByDtBetween(long begin, long end);
+    List<History> findAllByDtBetween(long begin, long end);
 
     void deleteAllByName(String name);
 

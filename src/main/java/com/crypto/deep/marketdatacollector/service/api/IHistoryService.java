@@ -4,6 +4,7 @@ import com.crypto.deep.marketdatacollector.model.entity.History;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 public interface IHistoryService {
     void save(List<History> list);
@@ -18,7 +19,7 @@ public interface IHistoryService {
 
     List<String> findAllNameDistinct();
 
-    List<History> findAllBetweenDt(LocalDateTime begin, LocalDateTime end);
+    Set<History> findAllBetweenDt(LocalDateTime begin, LocalDateTime end);
 
     List<History> synchronizeHistory(String name, LocalDateTime begin, LocalDateTime end) throws Exception;
 

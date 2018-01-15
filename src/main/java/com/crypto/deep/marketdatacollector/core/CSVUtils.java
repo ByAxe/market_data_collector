@@ -2,6 +2,7 @@ package com.crypto.deep.marketdatacollector.core;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.math.BigDecimal;
 import java.util.List;
 
 public class CSVUtils {
@@ -39,6 +40,8 @@ public class CSVUtils {
 
         StringBuilder sb = new StringBuilder();
         for (String value : values) {
+            if (value == null) value = String.valueOf(BigDecimal.ZERO);
+
             if (!first) {
                 sb.append(separators);
             }

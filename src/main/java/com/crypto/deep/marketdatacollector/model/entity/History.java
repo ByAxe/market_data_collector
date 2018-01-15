@@ -37,10 +37,54 @@ public class History {
     @Column(name = "price_usd")
     private BigDecimal priceUSD;
 
+//    public History() {
+//    }
+
     public History(String name, Long dt, BigDecimal priceBTC, BigDecimal priceUSD) {
         this.name = name;
         this.dt = dt;
         this.priceBTC = priceBTC;
         this.priceUSD = priceUSD;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Long getDt() {
+        return dt;
+    }
+
+    public void setDt(Long dt) {
+        this.dt = dt;
+    }
+
+    public BigDecimal getPriceBTC() {
+        return priceBTC;
+    }
+
+    public void setPriceBTC(BigDecimal priceBTC) {
+        this.priceBTC = priceBTC;
+    }
+
+    public BigDecimal getPriceUSD() {
+        return priceUSD;
+    }
+
+    public void setPriceUSD(BigDecimal priceUSD) {
+        this.priceUSD = priceUSD;
+    }
+
 }

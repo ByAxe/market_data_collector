@@ -71,7 +71,7 @@ public class HistoryService implements IHistoryService {
     }
 
     @Override
-    public List<History> findAllBetweenDt(LocalDateTime begin, LocalDateTime end) {
+    public Set<History> findAllBetweenDt(LocalDateTime begin, LocalDateTime end) {
         long beginInMills = Utils.convertLocalDateTimeToMills(begin);
         long endInMills = Utils.convertLocalDateTimeToMills(end);
 
@@ -133,7 +133,7 @@ public class HistoryService implements IHistoryService {
                     LocalDateTime endDate = LocalDateTime.of(2017, 1, 2, 13, 59, 59);
 
                     try {
-                        while (endDate.isBefore(THRESHOLD)) {
+                        while (beginDate.isBefore(THRESHOLD)) {
                             save(synchronizeHistory(name, beginDate, endDate));
 
                             beginDate = beginDate.plusDays(1);

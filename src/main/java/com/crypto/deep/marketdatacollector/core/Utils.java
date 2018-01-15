@@ -15,10 +15,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -26,7 +26,7 @@ import static java.time.temporal.ChronoUnit.MONTHS;
 
 public class Utils {
 
-    public static final LocalDateTime THRESHOLD = LocalDateTime.of(2017, 12, 28, 0, 0, 0);
+    public static final LocalDateTime THRESHOLD = LocalDateTime.of(2017, 1, 28, 0, 0, 0);
 
     /**
      * Преобразование {@link LocalDateTime} в JSON формат
@@ -322,6 +322,11 @@ public class Utils {
         while ((numRead = is.read(buf)) >= 0) {
             os.write(buf, 0, numRead);
         }
+    }
+
+    public static <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
+        Set<Object> seen = ConcurrentHashMap.newKeySet();
+        return t -> seen.add(keyExtractor.apply(t));
     }
 
     public static BigDecimal getBigDecimal(Object value) {

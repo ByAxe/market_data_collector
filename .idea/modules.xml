@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/market-data-collector.iml" filepath="$PROJECT_DIR$/market-data-collector.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/market-data-collector_main.iml" filepath="$PROJECT_DIR$/.idea/modules/market-data-collector_main.iml" group="market-data-collector" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/market-data-collector_test.iml" filepath="$PROJECT_DIR$/.idea/modules/market-data-collector_test.iml" group="market-data-collector" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/market_data_collector.iml" filepath="$PROJECT_DIR$/.idea/modules/market_data_collector.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/market_data_collector_main.iml" filepath="$PROJECT_DIR$/.idea/modules/market_data_collector_main.iml" group="market_data_collector" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/market_data_collector_test.iml" filepath="$PROJECT_DIR$/.idea/modules/market_data_collector_test.iml" group="market_data_collector" />
     </modules>
   </component>
 </project>
